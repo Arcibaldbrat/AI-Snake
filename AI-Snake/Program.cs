@@ -1,2 +1,2 @@
-﻿using var game = new AI_Snake.Game1();
+﻿using var game = new AISnake.Game1();
 game.Run();
