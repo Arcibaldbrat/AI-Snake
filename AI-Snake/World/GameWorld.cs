@@ -1,7 +1,5 @@
 ﻿using AISnake.AI;
 using AISnake.Entities;
-using AISnake.AI;
-using AISnake.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -37,6 +35,7 @@ namespace AISnake.World
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+           
 
             // AI rozhodnutí
             if (UseAI)
@@ -47,6 +46,9 @@ namespace AISnake.World
 
             // Pohyb hada
             Snake.Move(delta);
+
+            // Update jídla s pohybem
+            Food.Update(gameTime);
 
             // Kontrola kolizí
             if (Snake.CheckOutOfBounds(worldWidth, worldHeight) || Snake.CheckSelfCollision())

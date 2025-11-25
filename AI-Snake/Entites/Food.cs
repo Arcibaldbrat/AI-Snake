@@ -12,6 +12,10 @@ namespace AISnake.Entities
         private GraphicsDevice graphics;
         private Color color;
 
+        // 🔥 Movement
+        private Vector2 velocity;
+        private float speed = 55f; // můžeš změnit
+
         public Food(GraphicsDevice graphics, int size, Color color)
         {
             this.graphics = graphics;
@@ -19,6 +23,15 @@ namespace AISnake.Entities
             this.color = color;
             tex = CreateRect(graphics, Size, Size, color);
             Position = Vector2.Zero;
+
+            RandomizeVelocity();
+        }
+
+        private void RandomizeVelocity()
+        {
+            Random rng = new Random();
+            float angle = (float)(rng.NextDouble() * Math.PI * 2);
+            velocity = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
         }
 
         public void SpawnRandom(int width, int height, Random rng, int margin = 0)
@@ -26,9 +39,24 @@ namespace AISnake.Entities
             float x = rng.Next(margin, width - margin - Size);
             float y = rng.Next(margin, height - margin - Size);
             Position = new Vector2(x, y);
+
+            RandomizeVelocity();
         }
 
-        public void Update(GameTime gameTime) { }
+        public void Update(GameTime gameTime)
+        {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // pohyb
+            Position += velocity * speed * delta;
+
+            // odrazy od stěn
+            if (Position.X <= 0 || Position.X >= graphics.Viewport.Width - Size)
+                velocity.X *= -1;
+
+            if (Position.Y <= 0 || Position.Y >= graphics.Viewport.Height - Size)
+                velocity.Y *= -1;
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
