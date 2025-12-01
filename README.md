@@ -1,2 +1,6 @@
-# AI-Snake
-Je to hra o AI-Snakovi kterého si musíte sám vycvičit
+# Snake se schopnostma
+
+
+
+Hra je stejná jako klasický snake ale jsou tam powerupy.
+
